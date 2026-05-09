@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import type { Cell, LevelData, WordPair } from '../types';
 
 function shuffleArray<T>(arr: T[]): T[] {
@@ -41,6 +41,8 @@ export function useGame(level: LevelData, pairsOverride?: WordPair[]) {
   const [eliminatedCount, setEliminatedCount] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [milestone, setMilestone] = useState<string | null>(null);
+  const milestoneShownRef = useRef(false);
 
   const showFeedback = useCallback((msg: string) => {
     setFeedback(msg);
@@ -53,6 +55,8 @@ export function useGame(level: LevelData, pairsOverride?: WordPair[]) {
     setEliminatedCount(0);
     setIsComplete(false);
     setFeedback(null);
+    setMilestone(null);
+    milestoneShownRef.current = false;
   }, [activePairs]);
 
   const showHint = useCallback(() => {
@@ -142,6 +146,11 @@ export function useGame(level: LevelData, pairsOverride?: WordPair[]) {
         setEliminatedCount(prev => {
           const next = prev + 1;
           if (next >= 18) setIsComplete(true);
+          if (next === 9 && !milestoneShownRef.current) {
+            milestoneShownRef.current = true;
+            setMilestone('已经消了一半啦！继续加油 ⚡');
+            setTimeout(() => setMilestone(null), 2000);
+          }
           return next;
         });
       }, 300);
@@ -174,6 +183,7 @@ export function useGame(level: LevelData, pairsOverride?: WordPair[]) {
     eliminatedCount,
     isComplete,
     feedback,
+    milestone,
     handleCellClick,
     showHint,
     restart,

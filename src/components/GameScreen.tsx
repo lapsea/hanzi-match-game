@@ -5,6 +5,7 @@ import { GameBoard } from './GameBoard';
 import { GameHeader } from './GameHeader';
 import { GameControls } from './GameControls';
 import { FeedbackToast } from './FeedbackToast';
+import { MilestoneToast } from './MilestoneToast';
 import { CompletionModal } from './CompletionModal';
 import { UploadPanel } from './UploadPanel';
 
@@ -18,6 +19,7 @@ interface Props {
   onIncrementPlayCount?: (id: string) => void;
   onSaveCustom: (level: CustomLevel) => void;
   onPlayCustom: (level: CustomLevel) => void;
+  onWordBook: () => void;
 }
 
 export function GameScreen({
@@ -30,6 +32,7 @@ export function GameScreen({
   onIncrementPlayCount,
   onSaveCustom,
   onPlayCustom,
+  onWordBook,
 }: Props) {
   const activePairs = useMemo<WordPair[]>(() => {
     if (customLevel) return pickPairsForGame(customLevel.pairs);
@@ -39,7 +42,7 @@ export function GameScreen({
   const completedRef = useRef(false);
   const [showUpload, setShowUpload] = useState(false);
 
-  const { cells, eliminatedCount, isComplete, feedback, handleCellClick, showHint, restart } =
+  const { cells, eliminatedCount, isComplete, feedback, milestone, handleCellClick, showHint, restart } =
     useGame(level, activePairs);
 
   if (isComplete && !completedRef.current) {
@@ -67,6 +70,7 @@ export function GameScreen({
         onSelectLevel={onSelectLevel}
         onUpload={() => setShowUpload(true)}
       />
+      <MilestoneToast message={milestone} />
       <GameBoard cells={cells} onCellClick={handleCellClick} />
       <FeedbackToast message={feedback} />
       <GameControls
@@ -74,6 +78,9 @@ export function GameScreen({
         onRestart={handleRestart}
         onSelectLevel={onSelectLevel}
       />
+      <button className="btn-wordbook-entry" onClick={onWordBook}>
+        我的词语本
+      </button>
       {isComplete && (
         <CompletionModal
           onNextLevel={nextLevel && !customLevel ? () => onNextLevel(nextLevel) : null}

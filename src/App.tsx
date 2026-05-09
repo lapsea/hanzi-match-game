@@ -4,8 +4,9 @@ import { useLevels } from './hooks/useLevels';
 import { useSaveData } from './hooks/useSaveData';
 import { LevelSelectScreen } from './components/LevelSelectScreen';
 import { GameScreen } from './components/GameScreen';
+import { WordBookScreen } from './components/WordBookScreen';
 
-type Screen = 'select' | 'game';
+type Screen = 'select' | 'game' | 'wordbook';
 
 export default function App() {
   const { levels, loading, error } = useLevels();
@@ -79,6 +80,17 @@ export default function App() {
         onIncrementPlayCount={incrementPlayCount}
         onSaveCustom={saveCustomLevel}
         onPlayCustom={handlePlayCustom}
+        onWordBook={() => setScreen('wordbook')}
+      />
+    );
+  }
+
+  if (screen === 'wordbook') {
+    return (
+      <WordBookScreen
+        levels={levels}
+        saveData={saveData}
+        onBack={() => setScreen('game')}
       />
     );
   }
