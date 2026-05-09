@@ -89,6 +89,10 @@ export function LevelSelectScreen({
           </div>
         )}
       </div>
+
+      <div className="level-select-footer">
+        v1.5 · 哈维yao
+      </div>
     </div>
   );
 }

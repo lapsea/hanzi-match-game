@@ -137,6 +137,15 @@ body {
   padding: 20px 16px 32px;
 }
 
+.level-select-footer {
+  margin-top: auto;
+  padding-top: 24px;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #d1d5db;
+  letter-spacing: 0.04em;
+}
+
 .level-select-header {
   text-align: center;
   margin-bottom: 20px;
