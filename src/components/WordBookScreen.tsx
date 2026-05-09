@@ -1,17 +1,25 @@
-import type { LevelData } from '../types';
+import type { LevelData, CustomLevel } from '../types';
 
 const GRADE_NAMES: Record<number, string> = { 1: '启蒙', 2: '进阶', 3: '挑战' };
 
 interface Props {
   levels: LevelData[];
   saveData: { unlockedLevels: string[]; completedLevels: string[] };
+  customLevels: CustomLevel[];
   onBack: () => void;
 }
 
-export function WordBookScreen({ levels, saveData, onBack }: Props) {
-  const totalWords = levels
+export function WordBookScreen({ levels, saveData, customLevels, onBack }: Props) {
+  const playedCustomLevels = customLevels.filter(l => l.playCount > 0);
+
+  const builtInTotal = levels
     .filter(l => saveData.completedLevels.includes(l.id))
     .reduce((sum, l) => sum + l.pairs.length, 0);
+
+  const customTotal = playedCustomLevels
+    .reduce((sum, l) => sum + l.pairs.length, 0);
+
+  const totalWords = builtInTotal + customTotal;
 
   return (
     <div className="wordbook-screen">
@@ -58,6 +66,31 @@ export function WordBookScreen({ levels, saveData, onBack }: Props) {
             </div>
           );
         })}
+
+        {/* 自定义词库分区 */}
+        <div className={`wordbook-section${playedCustomLevels.length === 0 ? ' wordbook-section-locked' : ''}`}>
+          <div className="wordbook-section-header">
+            <span className="wordbook-section-title">自定义词库</span>
+            <span className={`wordbook-section-badge${playedCustomLevels.length === 0 ? ' badge-locked' : ''}`}>
+              {playedCustomLevels.length === 0 ? '暂无记录' : `${playedCustomLevels.length} 个词库`}
+            </span>
+          </div>
+
+          {playedCustomLevels.length === 0 ? (
+            <div className="wordbook-empty-hint">上传并完成自定义词库后将收录在这里～</div>
+          ) : (
+            playedCustomLevels.map(level => (
+              <div key={level.id} className="wordbook-custom-group">
+                <div className="wordbook-custom-title">{level.title}</div>
+                <div className="wordbook-chips">
+                  {level.pairs.map((pair, i) => (
+                    <span key={i} className="word-chip">{pair[0]}{pair[1]}</span>
+                  ))}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );

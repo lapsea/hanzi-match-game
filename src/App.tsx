@@ -90,6 +90,7 @@ export default function App() {
       <WordBookScreen
         levels={levels}
         saveData={saveData}
+        customLevels={customLevels}
         onBack={() => setScreen('game')}
       />
     );

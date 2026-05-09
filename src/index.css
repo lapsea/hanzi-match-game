@@ -680,6 +680,20 @@ body {
   padding: 6px 0;
 }
 
+.wordbook-custom-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.wordbook-custom-group:last-child { margin-bottom: 0; }
+
+.wordbook-custom-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #9ca3af;
+}
+
 .wordbook-chips {
   display: flex;
   flex-wrap: wrap;
