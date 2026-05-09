@@ -62,6 +62,13 @@ body {
 }
 .btn-primary:hover { background: #ea6c0f; }
 
+.btn-upload {
+  background: #f97316;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(249,115,22,0.4);
+}
+.btn-upload:hover { background: #ea6c0f; }
+
 .btn-hint {
   background: #fde68a;
   color: #92400e;
@@ -150,6 +157,19 @@ body {
   color: #f97316;
   font-weight: 700;
   box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.tab-btn-custom {
+  color: #f97316;
+  font-weight: 600;
+  background: linear-gradient(135deg, #fff7ed, #fef3c7);
+  border: 1.5px solid #fed7aa;
+}
+.tab-btn-custom.tab-active {
+  background: linear-gradient(135deg, #f97316, #f59e0b);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(249,115,22,0.4);
 }
 
 .tab-content { flex: 1; }
@@ -527,3 +547,31 @@ body {
 .modal-sub { color: #6b7280; margin-bottom: 20px; }
 .modal-actions { display: flex; flex-direction: column; gap: 10px; }
 .modal-actions .btn { width: 100%; }
+
+/* ===== Upload Modal ===== */
+.upload-modal {
+  max-width: 420px;
+  padding: 24px 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.upload-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  line-height: 1;
+}
+.close-btn:hover { background: #f3f4f6; color: #374151; }

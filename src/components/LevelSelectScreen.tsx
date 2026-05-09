@@ -14,7 +14,7 @@ interface Props {
 
 type Tab = 1 | 2 | 3 | 'custom';
 
-const GRADE_NAMES: Record<number, string> = { 1: '第1级', 2: '第2级', 3: '第3级' };
+const GRADE_NAMES: Record<number, string> = { 1: '第1级·启蒙', 2: '第2级·进阶', 3: '第3级·挑战' };
 
 export function LevelSelectScreen({
   levels,
@@ -50,10 +50,10 @@ export function LevelSelectScreen({
           </button>
         ))}
         <button
-          className={`tab-btn${activeTab === 'custom' ? ' tab-active' : ''}`}
+          className={`tab-btn tab-btn-custom${activeTab === 'custom' ? ' tab-active' : ''}`}
           onClick={() => setActiveTab('custom')}
         >
-          自定义 ★
+          ✨ 我的字库
         </button>
       </div>
 

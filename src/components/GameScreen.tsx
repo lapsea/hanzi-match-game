@@ -1,3 +1,4 @@
+import { useState, useMemo, useRef } from 'react';
 import type { LevelData, CustomLevel, WordPair } from '../types';
 import { useGame, pickPairsForGame } from '../hooks/useGame';
 import { GameBoard } from './GameBoard';
@@ -5,7 +6,7 @@ import { GameHeader } from './GameHeader';
 import { GameControls } from './GameControls';
 import { FeedbackToast } from './FeedbackToast';
 import { CompletionModal } from './CompletionModal';
-import { useMemo, useRef } from 'react';
+import { UploadPanel } from './UploadPanel';
 
 interface Props {
   level: LevelData;
@@ -15,6 +16,8 @@ interface Props {
   onComplete: (levelId: string, nextId: string | null) => void;
   customLevel?: CustomLevel;
   onIncrementPlayCount?: (id: string) => void;
+  onSaveCustom: (level: CustomLevel) => void;
+  onPlayCustom: (level: CustomLevel) => void;
 }
 
 export function GameScreen({
@@ -25,6 +28,8 @@ export function GameScreen({
   onComplete,
   customLevel,
   onIncrementPlayCount,
+  onSaveCustom,
+  onPlayCustom,
 }: Props) {
   const activePairs = useMemo<WordPair[]>(() => {
     if (customLevel) return pickPairsForGame(customLevel.pairs);
@@ -32,6 +37,7 @@ export function GameScreen({
   }, []);
 
   const completedRef = useRef(false);
+  const [showUpload, setShowUpload] = useState(false);
 
   const { cells, eliminatedCount, isComplete, feedback, handleCellClick, showHint, restart } =
     useGame(level, activePairs);
@@ -59,6 +65,7 @@ export function GameScreen({
         isCustom={!!customLevel}
         customTitle={customLevel?.title}
         onSelectLevel={onSelectLevel}
+        onUpload={() => setShowUpload(true)}
       />
       <GameBoard cells={cells} onCellClick={handleCellClick} />
       <FeedbackToast message={feedback} />
@@ -72,6 +79,13 @@ export function GameScreen({
           onNextLevel={nextLevel && !customLevel ? () => onNextLevel(nextLevel) : null}
           onRestart={handleRestart}
           onSelectLevel={onSelectLevel}
+        />
+      )}
+      {showUpload && (
+        <UploadPanel
+          onSave={onSaveCustom}
+          onPlay={onPlayCustom}
+          onClose={() => setShowUpload(false)}
         />
       )}
     </div>

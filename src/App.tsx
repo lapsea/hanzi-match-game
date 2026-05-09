@@ -11,9 +11,14 @@ export default function App() {
   const { levels, loading, error } = useLevels();
   const { saveData, customLevels, completeLevel, saveCustomLevel, deleteCustomLevel, incrementPlayCount } = useSaveData();
 
-  const [screen, setScreen] = useState<Screen>('select');
+  const [screen, setScreen] = useState<Screen>('game');
   const [activeLevel, setActiveLevel] = useState<LevelData | null>(null);
   const [activeCustomLevel, setActiveCustomLevel] = useState<CustomLevel | null>(null);
+
+  // Auto-enter first level once levels load, if none selected yet
+  if (!loading && !error && levels.length > 0 && activeLevel === null) {
+    setActiveLevel(levels[0]);
+  }
 
   if (loading) {
     return (
@@ -72,6 +77,8 @@ export default function App() {
         onComplete={handleComplete}
         customLevel={activeCustomLevel ?? undefined}
         onIncrementPlayCount={incrementPlayCount}
+        onSaveCustom={saveCustomLevel}
+        onPlayCustom={handlePlayCustom}
       />
     );
   }
