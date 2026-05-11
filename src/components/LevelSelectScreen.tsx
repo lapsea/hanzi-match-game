@@ -76,9 +76,10 @@ export function LevelSelectScreen({
                   className={`level-card${unlocked ? '' : ' level-locked'}${completed ? ' level-completed' : ''}`}
                   onClick={() => unlocked && onSelectLevel(level)}
                 >
+                  <div className={`level-card-band grade-${level.grade}`} />
                   <div className="level-card-top">
                     <span className="level-number">第{level.level}关</span>
-                    {completed && <span className="level-badge">✓</span>}
+                    {completed && <span className="level-badge level-badge-done">⭐⭐⭐</span>}
                     {!unlocked && <span className="level-badge">🔒</span>}
                   </div>
                   <div className="level-card-title">{level.title}</div>

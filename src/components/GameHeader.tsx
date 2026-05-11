@@ -24,7 +24,10 @@ export function GameHeader({ level, eliminatedCount, isCustom, customTitle, onUp
             ? `自定义 · ${customTitle}`
             : `第${level.grade}级（${GRADE_NAMES[level.grade]}）· 第${level.level}关 · ${level.title}`}
         </span>
-        <span className="progress-label">已消除：{eliminatedCount}/18 词对</span>
+        <div className="progress-bar-track">
+          <div className="progress-bar-fill" style={{ width: `${(eliminatedCount / 18) * 100}%` }} />
+        </div>
+        <span className="progress-count">{eliminatedCount}/18</span>
       </div>
     </div>
   );
