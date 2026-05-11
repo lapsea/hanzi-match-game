@@ -181,20 +181,22 @@ export function CustomTab({ customLevels, onPlay, onDelete, onSave }: Props) {
       {preview && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <div className="modal-title" style={{ fontSize: '1.2rem' }}>确认保存</div>
-            <div style={{ margin: '12px 0', textAlign: 'left' }}>
-              <p>📄 <strong>{preview.title}</strong></p>
-              <p>词语总数：{preview.result.pairs.length} 个</p>
-              <p>每局随机抽取：18 个</p>
-              {preview.result.warnings.length > 0 && (
-                <div className="preview-warnings">
-                  {preview.result.warnings.map((w, i) => <p key={i} className="warning-text">⚠ {w}</p>)}
-                </div>
-              )}
-            </div>
-            <div className="modal-actions">
-              <button className="btn btn-primary" onClick={confirmSave}>确认保存</button>
-              <button className="btn btn-outline" onClick={() => setPreview(null)}>取消</button>
+            <div className="modal-body">
+              <div className="modal-title" style={{ fontSize: '1.2rem' }}>确认保存</div>
+              <div style={{ margin: '12px 0', textAlign: 'left' }}>
+                <p>📄 <strong>{preview.title}</strong></p>
+                <p>词语总数：{preview.result.pairs.length} 个</p>
+                <p>每局随机抽取：18 个</p>
+                {preview.result.warnings.length > 0 && (
+                  <div className="preview-warnings">
+                    {preview.result.warnings.map((w, i) => <p key={i} className="warning-text">⚠ {w}</p>)}
+                  </div>
+                )}
+              </div>
+              <div className="modal-actions">
+                <button className="btn btn-primary" onClick={confirmSave}>确认保存</button>
+                <button className="btn btn-outline" onClick={() => setPreview(null)}>取消</button>
+              </div>
             </div>
           </div>
         </div>
@@ -203,6 +205,7 @@ export function CustomTab({ customLevels, onPlay, onDelete, onSave }: Props) {
       {deleteConfirm && (
         <div className="modal-overlay">
           <div className="modal-content">
+            <div className="modal-body">
             <div className="modal-title" style={{ fontSize: '1.1rem' }}>
               确定删除「{customLevels.find(l => l.id === deleteConfirm)?.title}」？
             </div>
@@ -210,6 +213,7 @@ export function CustomTab({ customLevels, onPlay, onDelete, onSave }: Props) {
             <div className="modal-actions">
               <button className="btn btn-danger" onClick={() => { onDelete(deleteConfirm); setDeleteConfirm(null); }}>删除</button>
               <button className="btn btn-outline" onClick={() => setDeleteConfirm(null)}>取消</button>
+            </div>
             </div>
           </div>
         </div>
