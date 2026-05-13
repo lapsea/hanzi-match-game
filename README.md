@@ -56,6 +56,23 @@ npm run build
 
 将 `dist/` 目录部署到任意静态文件服务器即可。
 
+## Docker 部署
+
+确保已安装 Docker，克隆仓库后执行：
+
+```bash
+docker compose up --build
+```
+
+启动后访问 `http://localhost:8080`。
+
+如不使用 docker compose，也可手动构建：
+
+```bash
+docker build -t hanzi-math .
+docker run -p 8080:80 hanzi-math
+```
+
 ## 技术栈
 
 React · TypeScript · Vite
